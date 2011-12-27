@@ -1,5 +1,5 @@
 name: Restarter
-main: com.minesnap.restarter.Restarter
+main: com.minesnap.restarter.RestarterPlugin
 version: 0.1
 author: AgentME (agentme49@gmail.com)
 commands:

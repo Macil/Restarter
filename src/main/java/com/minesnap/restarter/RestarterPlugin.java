@@ -2,6 +2,7 @@ package com.minesnap.restarter;
 
 import java.util.logging.Logger;
 
+import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -22,8 +23,13 @@ public class RestarterPlugin extends JavaPlugin {
 
     public void onEnable() {
         // Register our commands
-        getCommand("rsquery").setExecutor(new RSQueryCommand(this));
-        getCommand("rsdelay").setExecutor(new RSDelayCommand(this));
+        PluginCommand querycmd = getCommand("rsquery");
+        querycmd.setPermission("restarter.query");
+        querycmd.setExecutor(new RSQueryCommand(this));
+
+        PluginCommand delaycmd = getCommand("rsdelay");
+        delaycmd.setPermission("restarter.delay");
+        delaycmd.setExecutor(new RSDelayCommand(this));
 
         pdfFile = getDescription();
         logger.info(pdfFile.getName()+" version "+pdfFile.getVersion()+" is enabled!");
