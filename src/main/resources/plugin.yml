@@ -1,0 +1,11 @@
+name: Restarter
+main: com.minesnap.restarter.Restarter
+version: 0.1
+author: AgentME (agentme49@gmail.com)
+commands:
+  rsquery:
+    description: Queries how long until the next scheduled restart.
+    usage: /rsquery
+  rsdelay:
+    description: Delay the next scheduled restart by some number of minutes.
+    usage: "'/rsdelay [minutes]', for example, '/rsdelay 5'"
