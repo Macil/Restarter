@@ -6,6 +6,6 @@ commands:
   rsquery:
     description: Queries how long until the next scheduled restart.
     usage: /rsquery
-  rsdelay:
-    description: Delay the next scheduled restart by some number of minutes.
-    usage: "'/rsdelay [minutes]', for example, '/rsdelay 5'"
+  rsset:
+    description: Set the amount of time until the next restart.
+    usage: "'/rsset [minutes]', for example, '/rsset 5'"

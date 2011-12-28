@@ -43,9 +43,9 @@ public class RestarterPlugin extends JavaPlugin {
         querycmd.setPermission("restarter.query");
         querycmd.setExecutor(new RSQueryCommand(this));
 
-        PluginCommand delaycmd = getCommand("rsdelay");
-        delaycmd.setPermission("restarter.delay");
-        delaycmd.setExecutor(new RSDelayCommand(this));
+        PluginCommand delaycmd = getCommand("rsset");
+        delaycmd.setPermission("restarter.set");
+        delaycmd.setExecutor(new RSSetCommand(this));
 
         pdfFile = getDescription();
         logger.info(pdfFile.getName()+" version "+pdfFile.getVersion()+" is enabled!");
