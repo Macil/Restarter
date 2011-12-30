@@ -1,6 +1,7 @@
 package com.minesnap.restarter;
 
 import java.util.logging.Logger;
+import java.util.Random;
 
 import org.bukkit.command.PluginCommand;
 import org.bukkit.command.CommandSender;
@@ -23,7 +24,11 @@ public class RestarterPlugin extends JavaPlugin {
     PluginDescriptionFile pdfFile;
     BukkitScheduler scheduler;
 
-    int minutesToRestart = 60;
+    private int minutesToRestart;
+    private static final int minutesToRestartDefault = 80;
+
+    private int variance;
+    private static final int varianceDefault = 0;
 
     private static final int TICS_PER_SECOND = 20;
     private static final String warnMessage = "Server is having a scheduled restart in one minute.";
@@ -34,7 +39,7 @@ public class RestarterPlugin extends JavaPlugin {
     public void onDisable() {
         // NOTE: All registered events are automatically unregistered
         // when a plugin is disabled
-        logger.info(pdfFile.getName()+" disabled.");
+        logger.info("["+pdfFile.getName()+"] Disabled.");
     }
 
     public void onEnable() {
@@ -48,11 +53,34 @@ public class RestarterPlugin extends JavaPlugin {
         delaycmd.setExecutor(new RSSetCommand(this));
 
         pdfFile = getDescription();
-        logger.info(pdfFile.getName()+" version "+pdfFile.getVersion()+" is enabled!");
+        logger.info("["+pdfFile.getName()+"] v"+pdfFile.getVersion()+" enabled.");
 
         scheduler = getServer().getScheduler();
 
-        assert(minutesToRestart >= 1);
+        // Config stuff
+        getConfig().options().copyDefaults(true);
+        saveConfig();
+
+        minutesToRestart = getConfig().getInt("minutesToRestart");
+        variance = getConfig().getInt("variance");
+
+        if(minutesToRestart <= 1) {
+            minutesToRestart = minutesToRestartDefault;
+            logger.severe("["+pdfFile.getName()+"] minutesToRestart value too low! Using default.");
+        }
+
+        if(variance < 0 || minutesToRestart - variance <= 1) {
+            variance = varianceDefault;
+            logger.severe("["+pdfFile.getName()+"] variance value is bad! Using default.");
+        }
+
+        // Apply variance. The new value of minutesToRestart will be
+        // in the range of minutesToRestart ± variance.
+        Random rand = new Random();
+        minutesToRestart = minutesToRestart-variance + rand.nextInt(2*variance+1);
+
+        logger.info("["+pdfFile.getName()+"] Restart scheduled in "+
+                    minutesToRestart+" minutes.");
         scheduler.scheduleSyncDelayedTask(plugin, new RestartWarner(),
                                           TICS_PER_SECOND*60*(minutesToRestart-1));
     }
