@@ -1,11 +1,13 @@
 name: Restarter
 main: com.minesnap.restarter.RestarterPlugin
-version: 0.1
+version: 1.0
 author: AgentME (agentme49@gmail.com)
 commands:
   rsquery:
     description: Queries how long until the next scheduled restart.
     usage: /rsquery
+    permission: restarter.query
   rsset:
     description: Set the amount of time until the next restart.
     usage: "'/rsset [minutes]', for example, '/rsset 5'"
+    permission: restarter.set

@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.minesnap</groupId>
   <artifactId>restarter</artifactId>
-  <version>0.1-SNAPSHOT</version>
+  <version>1.0</version>
   <name>Restarter</name>
   <description>Restarter periodically stops the server so it can be
   restarted.</description>
