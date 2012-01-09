@@ -22,6 +22,20 @@ will run for an amount of time between 80 and 100 minutes before
 restarting. If you set variance to 0, then the server will always
 restart after exactly minutesToRestart minutes.
 
+Commands
+--------
+
+/rsquery
+
+Queries how long until the next scheduled restart. Requires the
+"restarter.query" permission.
+
+/rsset
+
+Sets the amount of time in minutes until the next restart. Giving zero
+or a negative number will do an immediate restart. Requires the
+"restarter.set" permission.
+
 Compiling
 ---------
 
