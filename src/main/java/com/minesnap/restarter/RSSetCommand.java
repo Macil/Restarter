@@ -15,8 +15,26 @@ public class RSSetCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] split) {
-        sender.sendMessage("/rsset received");
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if(args.length != 1) {
+            sender.sendMessage("A number of minutes is required.");
+            return true;
+        }
+
+        int minutes;
+        try {
+            minutes = Integer.parseInt(args[0]);
+        } catch(NumberFormatException e) {
+            sender.sendMessage("Could not parse number of minutes.");
+            return true;
+        }
+
+        plugin.scheduleRestart(minutes);
+        if(minutes == 1) {
+            sender.sendMessage("Restart scheduled 1 minute from now.");
+        } else {
+            sender.sendMessage("Restart scheduled "+minutes+" minutes from now.");
+        }
         return true;
     }
 }

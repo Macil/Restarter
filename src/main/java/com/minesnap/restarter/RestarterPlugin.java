@@ -88,16 +88,33 @@ public class RestarterPlugin extends JavaPlugin {
         Random rand = new Random();
         minutesToRestart = minutesToRestart-variance + rand.nextInt(2*variance+1);
 
-        warnTime = Calendar.getInstance();
-        warnTime.add(Calendar.MINUTE, minutesToRestart-1);
-        restartTime = (Calendar)warnTime.clone();
-        restartTime.add(Calendar.MINUTE, 1);
+        scheduleRestart(minutesToRestart);
+    }
 
+    public void scheduleRestart(int minutes) {
+        if(timer != null) {
+            timer.cancel();
+        }
         timer = new Timer(true);
-        timer.schedule(new RestartWarner(), warnTime.getTime());
+
+        if(minutes >= 1) {
+            warnTime = Calendar.getInstance();
+            warnTime.add(Calendar.MINUTE, minutes-1);
+            timer.schedule(new RestartWarner(), warnTime.getTime());
+
+            restartTime = (Calendar)warnTime.clone();
+            restartTime.add(Calendar.MINUTE, 1);
+        } else {
+            warnTime = null;
+
+            restartTime = Calendar.getInstance();
+            restartTime.add(Calendar.MINUTE, minutes);
+        }
+
         timer.schedule(new Restarter(), restartTime.getTime());
+
         logger.info("["+pdfFile.getName()+"] Restart scheduled in "+
-                    minutesToRestart+" minutes.");
+                    minutes+" minutes.");
     }
 
     private class RestartWarner extends TimerTask {
