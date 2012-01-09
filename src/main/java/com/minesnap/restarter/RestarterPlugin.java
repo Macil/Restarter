@@ -142,14 +142,7 @@ public class RestarterPlugin extends JavaPlugin {
         // log it and empty out the server first
         logger.info("["+pdfFile.getName()+"] Restarting...");
         clearServer(restartMessage);
-        try {
-            ConsoleCommandSender sender = getServer().getConsoleSender();
-            getServer().dispatchCommand(sender, "save-all");
-            getServer().dispatchCommand(sender, "stop");
-        } catch (CommandException e) {
-            logger.info("["+pdfFile.getName()+"] Something went wrong!");
-            return false;
-        }
+        getServer().shutdown();
         return true;
     }
 
