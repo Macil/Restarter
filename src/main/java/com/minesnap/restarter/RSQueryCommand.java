@@ -16,7 +16,12 @@ public class RSQueryCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] split) {
-        sender.sendMessage("/rsquery received");
+        int minutesLeft = plugin.getMinutesToRestartLeft();
+        if(minutesLeft == 1) {
+            sender.sendMessage("The next restart is in 1 minute.");
+        } else {
+            sender.sendMessage("The next restart is in "+minutesLeft+" minutes.");
+        }
         return true;
     }
 }

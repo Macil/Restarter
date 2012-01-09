@@ -142,4 +142,18 @@ public class RestarterPlugin extends JavaPlugin {
             player.kickPlayer(message);
         }
     }
+
+    /* Returns the minutesToRestart value that was read from config,
+     * regardless of whether it's been changed in-game */
+    public int getMinutesToRestartConfig() {
+        return minutesToRestart;
+    }
+
+    /* Returns the number of minutes until the next restart from
+     * now. */
+    public int getMinutesToRestartLeft() {
+        Calendar now = Calendar.getInstance();
+        long milliDiff = restartTime.getTime().getTime()-now.getTime().getTime();
+        return (int)(milliDiff / (1000*60));
+    }
 }
