@@ -2,6 +2,9 @@ package com.minesnap.restarter;
 
 import java.util.logging.Logger;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.Calendar;
 
 import org.bukkit.command.PluginCommand;
 import org.bukkit.command.CommandSender;
@@ -30,6 +33,10 @@ public class RestarterPlugin extends JavaPlugin {
     private int variance;
     private static final int varianceDefault = 0;
 
+    private Timer timer;
+    private Calendar warnTime;
+    private Calendar restartTime;
+
     private static final int TICS_PER_SECOND = 20;
     private static final String warnMessage = "Server is having a scheduled restart in one minute.";
     private static final String restartMessage = "The server is restarting and will be back in a moment!";
@@ -39,6 +46,8 @@ public class RestarterPlugin extends JavaPlugin {
     public void onDisable() {
         // NOTE: All registered events are automatically unregistered
         // when a plugin is disabled
+        timer.cancel();
+        timer = null;
         logger.info("["+pdfFile.getName()+"] Disabled.");
     }
 
@@ -79,25 +88,36 @@ public class RestarterPlugin extends JavaPlugin {
         Random rand = new Random();
         minutesToRestart = minutesToRestart-variance + rand.nextInt(2*variance+1);
 
+        warnTime = Calendar.getInstance();
+        warnTime.add(Calendar.MINUTE, minutesToRestart-1);
+        restartTime = (Calendar)warnTime.clone();
+        restartTime.add(Calendar.MINUTE, 1);
+
+        timer = new Timer(true);
+        timer.schedule(new RestartWarner(), warnTime.getTime());
+        timer.schedule(new Restarter(), restartTime.getTime());
         logger.info("["+pdfFile.getName()+"] Restart scheduled in "+
                     minutesToRestart+" minutes.");
-        scheduler.scheduleSyncDelayedTask(plugin, new RestartWarner(),
-                                          TICS_PER_SECOND*60*(minutesToRestart-1));
     }
 
-    private class RestartWarner implements Runnable {
+    private class RestartWarner extends TimerTask {
         public void run() {
-            getServer().broadcastMessage(ChatColor.RED+warnMessage);
-            logger.info("["+pdfFile.getName()+"] "+warnMessage);
-
-            scheduler.scheduleSyncDelayedTask(plugin, new Restarter(),
-                                              TICS_PER_SECOND*60*1);
+            scheduler.scheduleSyncDelayedTask(plugin, new Runnable() {
+                public void run() {
+                    getServer().broadcastMessage(ChatColor.RED+warnMessage);
+                    logger.info("["+pdfFile.getName()+"] "+warnMessage);
+                }
+            });
 	}
     }
 
-    private class Restarter implements Runnable {
+    private class Restarter extends TimerTask {
         public void run() {
-            stopServer();
+            scheduler.scheduleSyncDelayedTask(plugin, new Runnable() {
+                public void run() {
+                    stopServer();
+                }
+            });
         }
     }
 
