@@ -35,14 +35,15 @@ Commands
 
 /rsquery
 
-Queries how long until the next scheduled restart. Requires the
-"restarter.query" permission.
+Queries how long until the next scheduled restart from now. Requires
+the "restarter.query" permission.
 
 /rsset
 
-Sets the amount of time in minutes until the next restart. Giving zero
-or a negative number will do an immediate restart. Requires the
-"restarter.set" permission.
+Sets the amount of time in minutes until the next restart. This value
+is not saved to the configuration file. Giving zero or a negative
+number will do an immediate restart. Requires the "restarter.set"
+permission.
 
 Compiling
 ---------
