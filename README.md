@@ -11,6 +11,14 @@ Place the Restarter.jar file in the plugins/ directory. After the
 first run, a Restart/config.yml file will be generated with default
 values.
 
+Note that Restarter actually only stops the server. It does not handle
+starting the server up again; refer to the examples/ directory for
+example scripts that automatically bring the server up again after it
+stops.
+
+Configuration
+-------------
+
 The minutesToRestart value is how long in minutes the server will run
 between restarts.
 
