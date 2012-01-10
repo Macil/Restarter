@@ -5,9 +5,21 @@ author: AgentME (agentme49@gmail.com)
 commands:
   rsquery:
     description: Queries how long until the next scheduled restart.
-    usage: /rsquery
+    usage: "Usage: /rsquery"
     permission: restarter.query
   rsset:
     description: Set the amount of time until the next restart.
-    usage: "'/rsset [minutes]', for example, '/rsset 5'"
+    usage: "Usage: /rsset minutes"
     permission: restarter.set
+permissions:
+  restarter.*:
+    description: Gives access to all Restarter commands
+    children:
+      restarter.query: true
+      restarter.set: true
+  restarter.query:
+    description: Allows you to query how long until the next restart.
+    default: op
+  restarter.set:
+    description: Allows you to set how long until the next restart.
+    default: op

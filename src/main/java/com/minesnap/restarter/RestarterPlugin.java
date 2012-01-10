@@ -8,8 +8,6 @@ import java.util.Calendar;
 
 import org.bukkit.command.PluginCommand;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.CommandException;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.plugin.PluginDescriptionFile;

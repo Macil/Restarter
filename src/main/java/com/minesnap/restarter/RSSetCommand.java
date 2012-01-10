@@ -16,17 +16,15 @@ public class RSSetCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if(args.length != 1) {
-            sender.sendMessage("A number of minutes is required.");
-            return true;
-        }
+        if(args.length != 1)
+            return false;
 
         int minutes;
         try {
             minutes = Integer.parseInt(args[0]);
         } catch(NumberFormatException e) {
             sender.sendMessage("Could not parse number of minutes.");
-            return true;
+            return false;
         }
 
         plugin.scheduleRestart(minutes);
