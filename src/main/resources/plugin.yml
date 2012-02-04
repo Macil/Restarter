@@ -1,6 +1,6 @@
 name: Restarter
 main: com.minesnap.restarter.RestarterPlugin
-version: 1.1-SNAPSHOT
+version: "${project.version}"
 author: AgentME (agentme49@gmail.com)
 commands:
   rsquery:
