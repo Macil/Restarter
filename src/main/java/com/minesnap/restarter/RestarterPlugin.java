@@ -42,8 +42,6 @@ public class RestarterPlugin extends JavaPlugin {
     private final RestarterPlugin plugin = this;
 
     public void onDisable() {
-        // NOTE: All registered events are automatically unregistered
-        // when a plugin is disabled
         timer.cancel();
         timer = null;
         logger.info("["+pdfFile.getName()+"] Disabled.");
