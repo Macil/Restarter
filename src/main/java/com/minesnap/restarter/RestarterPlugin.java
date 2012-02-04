@@ -36,8 +36,8 @@ public class RestarterPlugin extends JavaPlugin {
     private Calendar restartTime;
 
     private static final int TICS_PER_SECOND = 20;
-    private static final String warnMessage = "Server is having a scheduled restart in one minute.";
-    private static final String restartMessage = "The server is restarting and will be back in a moment!";
+    private String warnMessage;
+    private String kickMessage;
 
     private final RestarterPlugin plugin = this;
 
@@ -68,6 +68,8 @@ public class RestarterPlugin extends JavaPlugin {
 
         minutesToRestart = getConfig().getInt("minutesToRestart");
         variance = getConfig().getInt("variance");
+        warnMessage = getConfig().getString("warnMessage");
+        kickMessage = getConfig().getString("kickMessage");
 
         if(minutesToRestart <= 1) {
             minutesToRestart = minutesToRestartDefault;
@@ -137,7 +139,7 @@ public class RestarterPlugin extends JavaPlugin {
     public boolean stopServer() {
         // log it and empty out the server first
         logger.info("["+pdfFile.getName()+"] Restarting...");
-        clearServer(restartMessage);
+        clearServer(kickMessage);
         getServer().shutdown();
         return true;
     }
