@@ -8,7 +8,7 @@ Installing
 ----------
 
 Place the Restarter.jar file in the plugins/ directory. After the
-first run, a Restart/config.yml file will be generated with default
+first run, a Restarter/config.yml file will be generated with default
 values.
 
 Note that Restarter actually only stops the server. It does not handle
