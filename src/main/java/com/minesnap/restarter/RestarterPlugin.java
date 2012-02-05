@@ -1,6 +1,5 @@
 package com.minesnap.restarter;
 
-import java.util.logging.Logger;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -21,8 +20,6 @@ import org.bukkit.ChatColor;
  * @author AgentME
  */
 public class RestarterPlugin extends JavaPlugin {
-    static final Logger logger = Logger.getLogger("Minecraft.Restarter");
-    PluginDescriptionFile pdfFile;
     BukkitScheduler scheduler;
 
     private int minutesToRestart;
@@ -44,16 +41,12 @@ public class RestarterPlugin extends JavaPlugin {
     public void onDisable() {
         timer.cancel();
         timer = null;
-        logger.info("["+pdfFile.getName()+"] Disabled.");
     }
 
     public void onEnable() {
         // Register our commands
         getCommand("rsquery").setExecutor(new RSQueryCommand(this));
         getCommand("rsset").setExecutor(new RSSetCommand(this));
-
-        pdfFile = getDescription();
-        logger.info("["+pdfFile.getName()+"] v"+pdfFile.getVersion()+" enabled.");
 
         scheduler = getServer().getScheduler();
 
@@ -68,12 +61,12 @@ public class RestarterPlugin extends JavaPlugin {
 
         if(minutesToRestart <= 1) {
             minutesToRestart = minutesToRestartDefault;
-            logger.severe("["+pdfFile.getName()+"] minutesToRestart value too low! Using default.");
+            getLogger().severe("minutesToRestart value too low! Using default.");
         }
 
         if(variance < 0 || minutesToRestart - variance <= 1) {
             variance = varianceDefault;
-            logger.severe("["+pdfFile.getName()+"] variance value is bad! Using default.");
+            getLogger().severe("variance value is bad! Using default.");
         }
 
         // Apply variance. The new value of minutesToRestart will be
@@ -106,8 +99,7 @@ public class RestarterPlugin extends JavaPlugin {
 
         timer.schedule(new Restarter(), restartTime.getTime());
 
-        logger.info("["+pdfFile.getName()+"] Restart scheduled in "+
-                    minutes+" minutes.");
+        getLogger().info("Restart scheduled in "+minutes+" minutes.");
     }
 
     private class RestartWarner extends TimerTask {
@@ -115,7 +107,7 @@ public class RestarterPlugin extends JavaPlugin {
             scheduler.scheduleSyncDelayedTask(plugin, new Runnable() {
                 public void run() {
                     getServer().broadcastMessage(ChatColor.RED+warnMessage);
-                    logger.info("["+pdfFile.getName()+"] "+warnMessage);
+                    getLogger().info(warnMessage);
                 }
             });
 	}
@@ -133,7 +125,7 @@ public class RestarterPlugin extends JavaPlugin {
 
     public boolean stopServer() {
         // log it and empty out the server first
-        logger.info("["+pdfFile.getName()+"] Restarting...");
+        getLogger().info("Restarting...");
         clearServer(kickMessage);
         getServer().shutdown();
         return true;
