@@ -106,8 +106,8 @@ public class RestarterPlugin extends JavaPlugin {
         public void run() {
             scheduler.scheduleSyncDelayedTask(plugin, new Runnable() {
                 public void run() {
+                    getLogger().info("Server restart in one minute.");
                     getServer().broadcastMessage(ChatColor.RED+warnMessage);
-                    getLogger().info(warnMessage);
                 }
             });
 	}
