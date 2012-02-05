@@ -49,11 +49,8 @@ public class RestarterPlugin extends JavaPlugin {
 
     public void onEnable() {
         // Register our commands
-        PluginCommand querycmd = getCommand("rsquery");
-        querycmd.setExecutor(new RSQueryCommand(this));
-
-        PluginCommand delaycmd = getCommand("rsset");
-        delaycmd.setExecutor(new RSSetCommand(this));
+        getCommand("rsquery").setExecutor(new RSQueryCommand(this));
+        getCommand("rsset").setExecutor(new RSSetCommand(this));
 
         pdfFile = getDescription();
         logger.info("["+pdfFile.getName()+"] v"+pdfFile.getVersion()+" enabled.");
