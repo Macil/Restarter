@@ -1,8 +1,11 @@
 Restarter
 =========
 
-Restarter automatically restarts the server after a configurable
-amount of time.
+The Restarter plugin for Bukkit automatically restarts the server
+after a configurable amount of time. It works as a quick fix for any
+stability problems some servers have when running for a long time,
+lets new plugins and configuration settings you've set take effect,
+and clears out those AFK players.
 
 Installing
 ----------
