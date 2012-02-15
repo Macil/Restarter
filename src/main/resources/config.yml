@@ -1,4 +1,5 @@
 minutesToRestart: 90
 variance: 10
+warn: 1
 warnMessage: "Server is having a scheduled restart in one minute."
 kickMessage: "The server is restarting and will be back in a moment!"

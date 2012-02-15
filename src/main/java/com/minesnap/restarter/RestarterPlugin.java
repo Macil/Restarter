@@ -24,12 +24,14 @@ public class RestarterPlugin extends JavaPlugin {
 
     private int minutesToRestart;
     private int variance;
+    private int warn;
 
     private Timer timer;
     private Calendar warnTime;
     private Calendar restartTime;
 
     private static final int TICS_PER_SECOND = 20;
+
     private String warnMessage;
     private String kickMessage;
 
@@ -53,6 +55,7 @@ public class RestarterPlugin extends JavaPlugin {
 
         minutesToRestart = getConfig().getInt("minutesToRestart");
         variance = getConfig().getInt("variance");
+        warn = getConfig().getInt("warn");
         warnMessage = getConfig().getString("warnMessage");
         kickMessage = getConfig().getString("kickMessage");
 
@@ -61,7 +64,14 @@ public class RestarterPlugin extends JavaPlugin {
             getLogger().severe("minutesToRestart value too low! Using default.");
         }
 
-        if(variance < 0 || minutesToRestart - variance <= 1) {
+        if(warn >= minutesToRestart) {
+            warn = 1;
+            getLogger().severe("warn value too high! Using default.");
+        }
+
+        if(warn < 0) warn = 0;
+
+        if(variance < 0 || minutesToRestart - variance <= warn) {
             variance = 0;
             getLogger().severe("variance value is bad! Using default.");
         }
@@ -80,13 +90,13 @@ public class RestarterPlugin extends JavaPlugin {
         }
         timer = new Timer(true);
 
-        if(minutes >= 1) {
+        if(warn > 0 && minutes >= warn) {
             warnTime = Calendar.getInstance();
-            warnTime.add(Calendar.MINUTE, minutes-1);
+            warnTime.add(Calendar.MINUTE, minutes-warn);
             timer.schedule(new RestartWarner(), warnTime.getTime());
 
             restartTime = (Calendar)warnTime.clone();
-            restartTime.add(Calendar.MINUTE, 1);
+            restartTime.add(Calendar.MINUTE, warn);
         } else {
             warnTime = null;
 
@@ -103,7 +113,6 @@ public class RestarterPlugin extends JavaPlugin {
         public void run() {
             scheduler.scheduleSyncDelayedTask(plugin, new Runnable() {
                 public void run() {
-                    getLogger().info("Server restart in one minute.");
                     getServer().broadcastMessage(ChatColor.RED+warnMessage);
                 }
             });
