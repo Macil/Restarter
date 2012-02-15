@@ -33,8 +33,11 @@ will run for an amount of time between 80 and 100 minutes before
 restarting. If you set variance to 0, then the server will always
 restart after exactly minutesToRestart minutes.
 
-The warnMessage string is the message displayed to all users one
-minute before the restart.
+The warn value is how many minutes before the restart to show the
+warnMessage. Defaults to 1.
+
+The warnMessage string is the message displayed to all users a
+configurable amount of time before the restart.
 
 The kickMessage string is the message shown to all users when they're
 auto-kicked off of the server for the restart.
