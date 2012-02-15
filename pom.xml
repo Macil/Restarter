@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.minesnap</groupId>
   <artifactId>restarter</artifactId>
-  <version>1.2-SNAPSHOT</version>
+  <version>1.2</version>
   <name>Restarter</name>
   <description>Restarter periodically stops the server so it can be
   restarted.</description>
@@ -18,7 +18,7 @@
     <dependency>
       <groupId>org.bukkit</groupId>
       <artifactId>bukkit</artifactId>
-      <version>1.1-R4-SNAPSHOT</version>
+      <version>1.1-R4</version>
     </dependency>
   </dependencies>
   <build>
