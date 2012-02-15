@@ -23,10 +23,7 @@ public class RestarterPlugin extends JavaPlugin {
     BukkitScheduler scheduler;
 
     private int minutesToRestart;
-    private static final int minutesToRestartDefault = 80;
-
     private int variance;
-    private static final int varianceDefault = 0;
 
     private Timer timer;
     private Calendar warnTime;
@@ -60,12 +57,12 @@ public class RestarterPlugin extends JavaPlugin {
         kickMessage = getConfig().getString("kickMessage");
 
         if(minutesToRestart <= 1) {
-            minutesToRestart = minutesToRestartDefault;
+            minutesToRestart = 80;
             getLogger().severe("minutesToRestart value too low! Using default.");
         }
 
         if(variance < 0 || minutesToRestart - variance <= 1) {
-            variance = varianceDefault;
+            variance = 0;
             getLogger().severe("variance value is bad! Using default.");
         }
 
